@@ -1,0 +1,134 @@
+﻿@model Magneti_Marelli_Test.Models.User
+
+@using Magneti_Marelli_Test.Utility;
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<style>
+    .modal-content {
+        width: 800px !important;
+        margin: 30px auto !important;
+    }
+</style>
+
+<div>
+    <div class="row">
+        <div class="col-xs-12">
+
+            <h1 class="page-header text-center">
+                User <span>Details</span>
+            </h1>
+
+        </div>
+    </div>
+    <div class="dl-horizontal">
+        <div>
+            <div class="col-xs-6">
+                <span class="col-xs-4">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </span>
+
+                <span class="col-xs-8">
+                    @Html.TextBox("FirstName", Model.FirstName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FirstName)
+                </span>
+            </div>
+
+            <div class="col-xs-6">
+                <span class="col-xs-4">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </span>
+
+                <span class="col-xs-8">
+                    @Html.TextBox("LastName", Model.LastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="row">
+        <div class="col-xs-12">
+
+            <h1 class="page-header text-center">
+                User <span>Groups</span>
+            </h1>
+
+        </div>
+    </div>
+    <div class="dl-horizontal">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Remove
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Magneti_Marelli_Test.Models.Groups group in Model.UserGroups)
+                {
+                    <tr>
+                        <th scope="row">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <span>
+                                @Html.DisplayFor(g => group.Id)
+                            </span>
+                        </th>
+                        <td>
+                            @Html.DisplayFor(g => group.Name)
+                        </td>
+                        <td>
+                            @Ajax.RawActionLink(string.Format("<i class='fa fa-minus'></i> Remove"), "RemoveGroups", "User", new { groupId = group.Id, userId = Model.UserId }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "btn btn-sm btn-danger" })
+                       </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+        <span>
+            @Html.ActionLink("Add Groups", "GetModal", "Group", new { Id = Model.UserId }, new
+       {
+        @* Needed to link to the html of the modal*@
+            data_target = "#modal-container",
+            @* Tells the bootstrap javascript to do its thing*@
+           data_toggle = "modal",
+           @class = "btn btn-primary fa fa-plus"
+       })
+        </span>
+    </div>
+</div>
+
+
+
+<p>
+
+    @Html.ActionLink("Back to List", "Index", "User")
+</p>
+
+
+<div id="modal-container" class="modal fade hidden-print" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+
