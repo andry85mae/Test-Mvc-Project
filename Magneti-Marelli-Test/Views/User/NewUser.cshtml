@@ -125,17 +125,20 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
+       
         $(document).ready(function () {
 
-            var d = $('.expiration-date').datepicker({
-                format: "dd/mm/yyyy",
-            }).on('changeDate', function (e,d1,d2) {
-                // `e` here contains the extra attributes
-                var data = moment($('.expiration-date').data("datepicker").getDate()).format('DD/MM/YYYY');
-                $('#expDate').attr("value", data);
+            var d = $('.expiration-date').datetimepicker({
+                format: "DD/MM/YYYY"
             });
 
-            d.datepicker('setDate', null);
+            //add for jquery validation in Chrome that accept only MM/DD/YYYY DateFormat
+            jQuery.validator.methods["date"] = function (value, element) {
+
+                var dateRegex = /^(0?[1-9]\/|[12]\d\/|3[01]\/){2}(19|20)\d\d$/;
+                return this.optional(element) || dateRegex.test(value);
+               
+            }
 
         });
     </script>

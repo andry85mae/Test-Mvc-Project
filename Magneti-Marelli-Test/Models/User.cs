@@ -36,7 +36,6 @@ namespace Magneti_Marelli_Test.Models
 
         public string Country { get; set; }
 
-
         public DateTime? ExpirationDate { get; set; }
 
         public User Manager { get; set; }

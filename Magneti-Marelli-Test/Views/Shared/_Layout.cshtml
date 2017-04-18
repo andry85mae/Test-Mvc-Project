@@ -8,13 +8,10 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top menuBarContainer">
         <div class="container">
-            <div class="navbar-header">
-                
-            </div>
-            <div class="navbar-collapse collapse">
-
+            <div class="col-md-2 topLogoContainer">
+                <div class="topLogo"></div>
             </div>
         </div>
     </div>
@@ -25,10 +22,10 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/bootstrap-datepicker")
     @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/moment")
     @RenderSection("scripts", required: false)
 </body>
 </html>
