@@ -30,9 +30,19 @@ namespace Magneti_Marelli_Test.Utility
 
             users.Add(u2);
         }
+
         public static List<User> TestUserFactory() {
 
+            User u2 = new User();
+            u2.FirstName = "Alice";
+            u2.LastName = "Mariani";
+            u2.UserId = 2;
 
+            for (var i = 0; i < 50; i++)
+            {
+
+                users.Add(u2);
+            }
             return users;
         }
     }

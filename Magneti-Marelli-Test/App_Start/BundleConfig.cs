@@ -26,10 +26,17 @@ namespace Magneti_Marelli_Test
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-datepicker").Include(
           "~/Scripts/bootstrap-datepicker.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/moment").Include(
+"~/Scripts/moment.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
+"~/Scripts/DataTables/media/js/jquery.dataTables.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome.css",
                       "~/Content/bootstrap-datepicker.css",
+                      "~/Content/DataTables/media/css/jquery.dataTables.css",
                       "~/Content/site.css"));
         }
     }

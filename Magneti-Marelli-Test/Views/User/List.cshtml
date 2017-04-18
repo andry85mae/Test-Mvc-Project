@@ -7,6 +7,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Scripts {
+<script>
+
+    $(document).ready(function () {
+        $('#grid').DataTable({
+            "pagingType": "full_numbers",
+            searching: false
+        } );
+    });
+
+</script>
+    }
 <div>
     <div class="row">
         <div class="col-xs-12">
@@ -56,9 +68,60 @@
 </div>
 @* By default BeginForm use FormMethod.Post *@
 
+<!--With DataTable-->
+<div style="margin-top:10px;">
+        <table id="grid" class="display compact" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayFor(modelItem => item.UserId)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", "User",new { id = item.UserId })" class="btn btn-sm btn-primary">
+                                Edit User
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            </a>
+                           
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Delete", "User",new { id = item.UserId })" class="btn btn-sm btn-danger">
+                                Delete User
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
 
+<!--/With DataTable-->
 
-<div class="table-responsive" style="margin-top:20px;">
+<!--Without DataTable-->
+@*<div class="table-responsive" style="margin-top:20px; max-height:600px;" >
     <table class="table">
         <thead>
             <tr>
@@ -101,6 +164,8 @@
             }
         </tbody>
     </table>
-</div>
+</div>*@
+
+<!--/ Without DataTable-->
 
 

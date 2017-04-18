@@ -12,8 +12,6 @@
             var qry = $('#qry').val();
 
             $.ajax({
-                // edit to add steve's suggestion.
-                //url: "/ControllerName/ActionName",
                 url: "/Group/Query",
                 type:"POST",
                 data: {
@@ -24,6 +22,11 @@
                     // your data could be a View or Json or what ever you returned in your action method
                     // parse your data here
                     $("#modal-content").html(data);
+
+                    $('#grid').DataTable({
+                        "pagingType": "full_numbers",
+                        searching: false
+                    });
                 }
             });
 
@@ -32,12 +35,12 @@
 
     });
 
-    function Add(userId) {
-        alert("add for user with Id: " + userId);
+    function Add(userId,groupId) {
+        alert("add for user with Id: " + userId + ", groupsId:" + groupId);
     }
 
-    function Remove(userId) {
-        alert("Remove for user with Id: " + userId);
+    function Remove(userId, groupId) {
+        alert("Remove for user with Id: " + userId + ", groupsId:" + groupId);
     }
 
 </script>
@@ -58,12 +61,14 @@
             </span>
             <input type="text" id="qry" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
 
-            <button class="btn btn-primary" id="searchButton">Search</button>
+            <button class="btn btn-primary" id="searchButton" style="margin-left:20px;">Search</button>
         </div>
 
 
 
-      <div id="modal-content"></div>
+      <div id="modal-content"  style="margin-top:10px;">
+          
+      </div>
     </div>
 </div>
 <div class="modal-footer">

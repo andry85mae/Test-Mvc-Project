@@ -70,7 +70,7 @@ namespace Magneti_Marelli_Test.Controllers
                 var filtergroups=groups.Where(g => g.Name.Contains(searchTerm));
 
                 StringBuilder sb = new StringBuilder();
-                sb.Append("<table class='table table-condensed'>");
+                sb.Append("<table id='grid' class='table table-condensed'>");
 
 
                 sb.Append("<thead>");
@@ -88,8 +88,8 @@ namespace Magneti_Marelli_Test.Controllers
 
                     sb.Append("<td>" + g.Id + "</td>");
                     sb.Append("<td>" + g.Name + "</td>");
-                    sb.Append("<td> <button class='btn btn-primary btn-xs' onclick='Add("+ UserId + ")'>Add</button></td>");
-                    sb.Append("<td> <button class='btn btn-primary btn-xs' onclick='Remove(" + UserId + ")'>Remove</button></td>");
+                    sb.Append("<td> <button class='btn btn-primary btn-xs' onclick='Add("+ UserId + ","+ g.Id + ")'>Add</button></td>");
+                    sb.Append("<td> <button class='btn btn-primary btn-xs' onclick='Remove(" + UserId + "," + g.Id + ")'>Remove</button></td>");
 
                     sb.Append("</tr>");
                 }
