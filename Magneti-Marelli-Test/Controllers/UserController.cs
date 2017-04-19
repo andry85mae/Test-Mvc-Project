@@ -134,5 +134,20 @@ namespace Magneti_Marelli_Test.Controllers
             }
         }
 
+
+        public JsonResult GetManagerList(string searchTerm)
+
+        {
+            if(string.IsNullOrEmpty(searchTerm))
+                return Json(null, JsonRequestBehavior.AllowGet);
+
+            var users = Utility.Utility.users.Where(u=>u.FirstName.ToLower().Contains(searchTerm) || u.LastName.ToLower().Contains(searchTerm)).Select(x=> new { id = x.UserId, text = x.FirstName+" "+x.LastName });
+
+            
+
+            return Json(users, JsonRequestBehavior.AllowGet);
+
+        }
+
     }
 }

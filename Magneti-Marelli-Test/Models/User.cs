@@ -23,6 +23,8 @@ namespace Magneti_Marelli_Test.Models
 
         [Required(ErrorMessage = "LastName is required")]
         public string LastName { get; set; }
+
+        public string LoginName { get; set; }
         
         public string DisplayName { get; set; }
 
@@ -38,7 +40,9 @@ namespace Magneti_Marelli_Test.Models
 
         public DateTime? ExpirationDate { get; set; }
 
-        public User Manager { get; set; }
+        public int ManagerId { get; set; }
+
+        public string ManagerLabel { get; set; }
 
         public string BL { get; set; }
 

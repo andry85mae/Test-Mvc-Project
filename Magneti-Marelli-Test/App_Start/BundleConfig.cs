@@ -29,6 +29,9 @@ namespace Magneti_Marelli_Test
             bundles.Add(new ScriptBundle("~/bundles/moment").Include(
 "~/Scripts/moment.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/select2").Include(
+"~/Scripts/select2.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
 "~/Scripts/DataTables/media/js/jquery.dataTables.min.js"));
 
@@ -36,6 +39,7 @@ namespace Magneti_Marelli_Test
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome.css",
                       "~/Content/bootstrap-datetimepicker.min.css",
+                      "~/Content/css/select2.css",
                       "~/Content/DataTables/media/css/jquery.dataTables.css",
                       "~/Content/site.css"));
         }

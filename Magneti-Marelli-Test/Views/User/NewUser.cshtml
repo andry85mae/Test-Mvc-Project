@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-       
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -107,6 +107,14 @@
                 @Html.ValidationMessageFor(model => model.Site, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ManagerId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownListFor(n => n.ManagerId, new SelectList(Enumerable.Empty<SelectListItem>(), "ManagerId", "ManagerLabel", 0), new { @id = "managerId", @style = "width:100%;" })
+                           
+            </div>
+            @Html.ValidationMessageFor(n => n.ManagerId)
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -124,8 +132,39 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
-       
+
         $(document).ready(function () {
+
+            var pageSize = 20;
+
+           var optionListUrl = '@Url.Action("GetManagerList", "User")';
+
+           //Method which is to be called for populating options in dropdown //dynamically
+
+           $('#managerId').select2({
+                   ajax: {
+                       delay: 150,
+                       url: optionListUrl,
+                       type: 'GET',
+                       dataType: 'json',
+                       data: function (params) {
+
+                           return {
+                               searchTerm: params.term
+                           };
+                       },
+                       processResults: function (data, params) {
+
+                           return {
+                               results: data,
+                               
+                           };
+                       }
+                   },
+                   placeholder: "-- Select --",
+                   minimumInputLength: 0,
+                   allowClear: true,
+               });
 
             var d = $('.expiration-date').datetimepicker({
                 format: "DD/MM/YYYY"
@@ -136,7 +175,7 @@
 
                 var dateRegex = /^(0?[1-9]\/|[12]\d\/|3[01]\/){2}(19|20)\d\d$/;
                 return this.optional(element) || dateRegex.test(value);
-               
+
             }
 
         });

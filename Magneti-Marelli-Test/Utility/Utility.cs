@@ -15,34 +15,49 @@ namespace Magneti_Marelli_Test.Utility
         static Utility() {
 
             User u = new User();
+            u.LoginName = "grupporeti\\maestan1";
             u.FirstName = "Andrea";
             u.LastName = "Maestroni";
+            u.ManagerLabel = "Alberto Sangalli";
             u.UserId = 1;
+            u.ManagerId = 3;
 
             Groups group1 = new Groups() { Id = 1, Name = "Groups1" };
             u.UserGroups.Add(group1);
             users.Add(u);
 
             User u2 = new User();
+            u2.LoginName = "grupporeti\\mariani";
             u2.FirstName = "Alice";
             u2.LastName = "Mariani";
+            u2.ManagerId = 3;
+            u2.ManagerLabel = "Alberto Sangalli";
             u2.UserId = 2;
 
             users.Add(u2);
+
+            User u3 = new User();
+            u3.LoginName = "grupporeti\\sangalli";
+            u3.FirstName = "Alberto";
+            u3.LastName = "Sangalli";
+            u3.UserId = 3;
         }
 
         public static List<User> TestUserFactory() {
 
             User u2 = new User();
+            u2.LoginName = "grupporeti\\mariani";
             u2.FirstName = "Alice";
             u2.LastName = "Mariani";
             u2.UserId = 2;
 
-            for (var i = 0; i < 50; i++)
+            for (var i = 0; i < 10; i++)
             {
 
                 users.Add(u2);
             }
+
+            
             return users;
         }
     }

@@ -27,13 +27,13 @@
         </div>
     </div>
     <div class="dl-horizontal">
-        <div>
+        <div class="row" style="margin-bottom:10px;">
             <div class="col-xs-6">
                 <span class="col-xs-4">
                     @Html.DisplayNameFor(model => model.FirstName)
                 </span>
 
-                <span class="col-xs-8">
+                <span class="col-xs-6">
                     @Html.TextBox("FirstName", Model.FirstName, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.FirstName)
                 </span>
@@ -44,11 +44,22 @@
                     @Html.DisplayNameFor(model => model.LastName)
                 </span>
 
-                <span class="col-xs-8">
+                <span class="col-xs-6">
                     @Html.TextBox("LastName", Model.LastName, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.LastName)
                 </span>
             </div>
+        </div>
+        <div class="row" style="margin-bottom:10px;">
+            <span class="col-xs-6">
+                <span class="col-xs-4">
+                    @Html.DisplayNameFor(model => model.ManagerId)
+                </span>
+                <span class="col-xs-6">
+                    @Html.DropDownListFor(n => n.ManagerId, new SelectList(Enumerable.Empty<SelectListItem>(), "ManagerId", "ManagerLabel", 0), new { @class = "form-control", @id = "managerId", @style = "width:100%;" })
+                    @Html.ValidationMessageFor(n => n.ManagerId)
+                </span>
+               </span> 
         </div>
     </div>
 </div>
@@ -95,7 +106,7 @@
                         </td>
                         <td>
                             @Ajax.RawActionLink(string.Format("<i class='fa fa-minus'></i> Remove"), "RemoveGroups", "User", new { groupId = group.Id, userId = Model.UserId }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "btn btn-sm btn-danger" })
-                       </td>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -130,5 +141,51 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+        $(document).ready(function () {
+
+            var pageSize = 20;
+
+           var optionListUrl = '@Url.Action("GetManagerList", "User")';
+
+           //Method which is to be called for populating options in dropdown //dynamically
+           $('#managerId').append($('<option>', {
+               value: @Model.ManagerId,
+               text: "@Model.ManagerLabel"
+           }));
+
+           $('#managerId').select2({
+                   ajax: {
+                       delay: 150,
+                       url: optionListUrl,
+                       type: 'GET',
+                       dataType: 'json',
+                       data: function (params) {
+
+                           return {
+                               searchTerm: params.term
+                           };
+                       },
+                       processResults: function (data, params) {
+
+                           return {
+                               results: data,
+
+                           };
+                       }
+                   },
+                   placeholder: "-- Select --",
+                   minimumInputLength: 0,
+                   allowClear: true,
+           });
+
+        });
+    </script>
+}
 
 
