@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 
@@ -12,7 +13,8 @@ namespace Magneti_Marelli_Test.Utility
     {
         public static List<User> users = new List<User>();
 
-        static Utility() {
+        static Utility()
+        {
 
             User u = new User();
             u.LoginName = "grupporeti\\maestan1";
@@ -55,7 +57,8 @@ namespace Magneti_Marelli_Test.Utility
             u3.IsEnable = true;
         }
 
-        public static List<User> TestUserFactory() {
+        public static List<User> TestUserFactory()
+        {
 
             User u2 = new User();
             u2.LoginName = "grupporeti\\mariani";
@@ -69,8 +72,33 @@ namespace Magneti_Marelli_Test.Utility
                 users.Add(u2);
             }
 
-            
+
             return users;
+        }
+
+
+        public static string GetPortalAdministratorGroupName()
+        {
+            return WebConfigurationManager.AppSettings["PortalAdministratorGroup"];
+        }
+
+        public static string GetLocalAdministratorGroupName()
+        {
+            return WebConfigurationManager.AppSettings["LocalAdministratorGroup"];
+        }
+
+        public static List<LookupValue<string, string>> GetLocalAdministratorsGroups()
+        {
+            CustomConfigSection amministrator = (CustomConfigSection)WebConfigurationManager.GetSection("CustomConfigSection");
+            List<LookupValue<string, string>> groups = new List<LookupValue<string, string>>();
+
+            foreach (var l_element in amministrator.ConfigElements.AsEnumerable())
+            {
+                groups.Add(new LookupValue<string, string>(l_element.Name,l_element.OU));
+            }
+
+
+            return groups;
         }
     }
 }

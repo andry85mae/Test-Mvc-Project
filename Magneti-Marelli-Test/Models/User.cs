@@ -65,25 +65,56 @@ namespace Magneti_Marelli_Test.Models
         {
             get
             {
+                string portalAdministratorGroup = Utility.Utility.GetPortalAdministratorGroupName();
+                string localAdministratorGroups = Utility.Utility.GetLocalAdministratorGroupName();
 
-                if (this.UserGroups.FirstOrDefault(x => x.Name == "Groups1") != null)
+                if (this.UserGroups.FirstOrDefault(x => x.Name == portalAdministratorGroup) != null)
                     return PortalRole.PortalAdministrators;
 
-                else if (this.UserGroups.FirstOrDefault(x => x.Name == "Goups2") != null)
+                if (OUList.Count > 0)
                     return PortalRole.LocalAdmnistrator;
 
-                else
-                    return PortalRole.Manager;
+                return PortalRole.Manager;
             }
         }
 
+        public List<string> OUList
+        {
+            get
+            {
+
+                List<string> OU = new List<string>();
+                List<LookupValue<string, string>> localGroups = Utility.Utility.GetLocalAdministratorsGroups();
+
+                string portalAdministratorGroup = Utility.Utility.GetPortalAdministratorGroupName();
+                if ((this.UserGroups.FirstOrDefault(x => x.Name == portalAdministratorGroup) != null))
+                {
+                    foreach (LookupValue<string, string> lg in localGroups)
+                    {
+                        OU.Add(lg.Value);
+
+                    }
+                    
+                    return OU;
+                }
+
+                foreach (LookupValue<string, string> lg in localGroups)
+                {
+                    if (this.UserGroups.FirstOrDefault(ug => ug.Name == lg.Key) != null)
+                        OU.Add(lg.Value);
+
+                }
+
+                return OU;
+            }
+        }
         public List<Groups> UserGroups { get; set; }
     }
 
 
     public enum PortalRole
     {
-        [Display(Name ="Portal Adminsitrator")]
+        [Display(Name = "Portal Adminsitrator")]
         PortalAdministrators = 1,
         [Display(Name = "Local Adminsitrator")]
         LocalAdmnistrator = 2,

@@ -267,11 +267,11 @@ namespace Magneti_Marelli_Test.Controllers
             u.IsEnable = true;
 
 
-            Groups group1 = new Groups() { Id = 1, Name = "Groups1" };
-            Groups group2 = new Groups() { Id = 2, Name = "Groups2" };
-            Groups group3 = new Groups() { Id = 3, Name = "Groups3" };
-            Groups group4 = new Groups() { Id = 4, Name = "Groups4" };
-            Groups group5 = new Groups() { Id = 5, Name = "Groups5" };
+            Groups group1 = new Groups() { Id = 1, Name = "Group1" };
+            Groups group2 = new Groups() { Id = 2, Name = "Group2" };
+            Groups group3 = new Groups() { Id = 3, Name = "Group3" };
+            Groups group4 = new Groups() { Id = 4, Name = "Group4" };
+            Groups group5 = new Groups() { Id = 5, Name = "Group5" };
 
             u.UserGroups.Add(group1);
             u.UserGroups.Add(group2);
