@@ -597,6 +597,7 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\Shared\_ModalView.cshtml" />
     <Content Include="Views\User\NewUser.cshtml" />
+    <Content Include="Views\Shared\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

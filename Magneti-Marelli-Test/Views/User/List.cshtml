@@ -21,19 +21,7 @@
     }
 <div>
     <div class="row">
-        <div class="col-xs-12">
-
-            <h1 class="page-header text-center">
-                Welcome <span>@User.Identity.Name</span>
-            </h1>
-
-            <p class="h3 page-subheader text-center">You are member of: </p>
-
-            <p class="page-subheader text-center">Gruppo 1</p>
-            <p class="page-subheader text-center">Gruppo 2</p>
-            <p class="page-subheader text-center">Gruppo 3</p>
-
-        </div>
+        @{Html.RenderAction("GetCurrentUserDetails", "User");} 
     </div>
 </div>
 

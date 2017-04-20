@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -60,6 +61,35 @@ namespace Magneti_Marelli_Test.Models
 
         public bool IsEnable { get; set; }
 
+        public PortalRole Role
+        {
+            get
+            {
+
+                if (this.UserGroups.FirstOrDefault(x => x.Name == "Groups1") != null)
+                    return PortalRole.PortalAdministrators;
+
+                else if (this.UserGroups.FirstOrDefault(x => x.Name == "Goups2") != null)
+                    return PortalRole.LocalAdmnistrator;
+
+                else
+                    return PortalRole.Manager;
+            }
+        }
+
         public List<Groups> UserGroups { get; set; }
     }
+
+
+    public enum PortalRole
+    {
+        [Display(Name ="Portal Adminsitrator")]
+        PortalAdministrators = 1,
+        [Display(Name = "Local Adminsitrator")]
+        LocalAdmnistrator = 2,
+        [Display(Name = "Manager")]
+        Manager = 3
+
+    }
+
 }

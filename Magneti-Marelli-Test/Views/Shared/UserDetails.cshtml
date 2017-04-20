@@ -1,0 +1,30 @@
+﻿@model Magneti_Marelli_Test.Models.User
+
+@using Magneti_Marelli_Test.Utility;
+
+<div class="col-xs-12">
+
+    <h1 class="page-header text-center">
+        Welcome <span>@User.Identity.Name</span>
+    </h1>
+
+    <p class="h3 page-subheader text-center">
+        <span>You belong to this groups: </span>
+        <br />
+        @foreach (var item in Model.UserGroups)
+        {
+            <span style="margin-right:5px;">
+                <strong>@item.Name</strong>
+            </span>
+        }
+    </p>
+
+    <p class="h3 page-subheader text-center">
+        <span>Your Role is : </span>
+        <br />
+
+        <span><strong> @Helper.GetEnumDescriptionValues(Model.Role)</strong></span>
+    </p>
+
+
+</div>
