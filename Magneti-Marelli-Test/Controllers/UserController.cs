@@ -9,6 +9,11 @@ namespace Magneti_Marelli_Test.Controllers
 {
     public class UserController : Controller
     {
+        /// <summary>
+        /// used in List view for search user
+        /// </summary>
+        /// <param name="qry"> query for filter user</param>
+        /// <returns>List of user</returns>
         [HttpPost]
         [HandleError]
         public ActionResult Query(string qry)
@@ -23,7 +28,10 @@ namespace Magneti_Marelli_Test.Controllers
             }
         }
 
-        // GET: User
+        /// <summary>
+        /// Used for navigate in List view with empty result
+        /// </summary>
+        /// <returns></returns>
         [HandleError]
         public ActionResult Index()
         {
@@ -38,6 +46,11 @@ namespace Magneti_Marelli_Test.Controllers
             }
         }
 
+        /// <summary>
+        /// Used for navigate in Edit view with user model
+        /// </summary>
+        /// <param name="id">id of user to load</param>
+        /// <returns></returns>
         [HandleError]
         public ActionResult Edit(int id)
         {
@@ -52,6 +65,12 @@ namespace Magneti_Marelli_Test.Controllers
             }
         }
 
+
+        /// <summary>
+        /// used for delete user in details view 
+        /// </summary>
+        /// <param name="id">id of the user to delete</param>
+        /// <returns>view with list</returns>
         [HandleError]
         public ActionResult Delete(int id)
         {
@@ -59,7 +78,27 @@ namespace Magneti_Marelli_Test.Controllers
             {
                 User u = Utility.Utility.TestUserFactory().FirstOrDefault(x => x.UserId == id);
 
-                return View("List", u);
+                return View("List", new List<User>());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// used for save user in details view for deleting user
+        /// </summary>
+        /// <param name="id">id of the user to delete</param>
+        /// <returns>view with list</returns>
+        [HandleError]
+        public ActionResult Save(int id)
+        {
+            try
+            {
+                User u = Utility.Utility.TestUserFactory().FirstOrDefault(x => x.UserId == id);
+
+                return View("Details", u);
             }
             catch (Exception ex)
             {
@@ -134,18 +173,35 @@ namespace Magneti_Marelli_Test.Controllers
             }
         }
 
-
+        [HandleError]
         public JsonResult GetManagerList(string searchTerm)
 
         {
-            if(string.IsNullOrEmpty(searchTerm))
+            if (string.IsNullOrEmpty(searchTerm))
                 return Json(null, JsonRequestBehavior.AllowGet);
 
-            var users = Utility.Utility.users.Where(u=>u.FirstName.ToLower().Contains(searchTerm) || u.LastName.ToLower().Contains(searchTerm)).Select(x=> new { id = x.UserId, text = x.FirstName+" "+x.LastName });
+            var users = Utility.Utility.users.Where(u => u.FirstName.ToLower().Contains(searchTerm) || u.LastName.ToLower().Contains(searchTerm)).Select(x => new { id = x.UserId, text = x.FirstName + " " + x.LastName });
 
-            
+
 
             return Json(users, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HandleError]
+        public ActionResult ResetPassword(int userId)
+        {
+
+            try
+            {
+
+                User u = Utility.Utility.TestUserFactory().FirstOrDefault(x => x.UserId == userId);
+                return View("Details", u);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 

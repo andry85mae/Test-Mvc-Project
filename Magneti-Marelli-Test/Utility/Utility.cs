@@ -21,6 +21,10 @@ namespace Magneti_Marelli_Test.Utility
             u.ManagerLabel = "Alberto Sangalli";
             u.UserId = 1;
             u.ManagerId = 3;
+            u.LastLogon = DateTime.Now;
+            u.LastPasswordChange = DateTime.Now;
+            u.UserModification = string.Empty;
+            u.IsEnable = true;
 
             Groups group1 = new Groups() { Id = 1, Name = "Groups1" };
             u.UserGroups.Add(group1);
@@ -33,6 +37,10 @@ namespace Magneti_Marelli_Test.Utility
             u2.ManagerId = 3;
             u2.ManagerLabel = "Alberto Sangalli";
             u2.UserId = 2;
+            u2.LastLogon = DateTime.Now;
+            u2.LastPasswordChange = DateTime.Now;
+            u2.UserModification = string.Empty;
+            u2.IsEnable = false;
 
             users.Add(u2);
 
@@ -41,6 +49,10 @@ namespace Magneti_Marelli_Test.Utility
             u3.FirstName = "Alberto";
             u3.LastName = "Sangalli";
             u3.UserId = 3;
+            u3.LastLogon = DateTime.Now;
+            u3.LastPasswordChange = DateTime.Now;
+            u3.UserModification = string.Empty;
+            u3.IsEnable = true;
         }
 
         public static List<User> TestUserFactory() {

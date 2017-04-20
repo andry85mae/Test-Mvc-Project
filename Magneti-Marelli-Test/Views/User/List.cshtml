@@ -83,7 +83,6 @@
                         @Html.DisplayNameFor(model => model.LastName)
                     </th>
                     <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -101,17 +100,17 @@
                         </td>
                         <td>
                             <a href="@Url.Action("Edit", "User",new { id = item.UserId })" class="btn btn-sm btn-primary">
-                                Edit User
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                Edit User
                             </a>
                            
                         </td>
-                        <td>
+                        @*<td>
                             <a href="@Url.Action("Delete", "User",new { id = item.UserId })" class="btn btn-sm btn-danger">
                                 Delete User
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </a>
-                        </td>
+                        </td>*@
                     </tr>
                 }
             </tbody>
