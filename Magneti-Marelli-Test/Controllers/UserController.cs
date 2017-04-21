@@ -1,4 +1,5 @@
 ﻿using Magneti_Marelli_Test.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,8 @@ namespace Magneti_Marelli_Test.Controllers
         {
             try
             {
-                return View("List", Utility.Utility.TestUserFactory());
+                List<User> users = Utility.DirectoryEntryUtility.GetUserByQuery(this.HttpContext, qry);
+                return View("List", users);
             }
             catch (Exception ex)
             {
@@ -37,6 +39,10 @@ namespace Magneti_Marelli_Test.Controllers
         {
             try
             {
+
+                HttpCookie ck = Utility.Utility.CreateCurrentUserCookie();
+                HttpContext.Response.Cookies.Add(ck);
+
                 List<User> users = new List<User>();
                 return View("List", users);
             }
@@ -52,11 +58,11 @@ namespace Magneti_Marelli_Test.Controllers
         /// <param name="id">id of user to load</param>
         /// <returns></returns>
         [HandleError]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string loginName)
         {
             try
             {
-                User u = Utility.Utility.TestUserFactory().FirstOrDefault(x => x.UserId == id);
+                User u = new User();
                 return View("Details", u);
             }
             catch (Exception ex)
@@ -76,8 +82,9 @@ namespace Magneti_Marelli_Test.Controllers
         {
             try
             {
-                User u = Utility.Utility.TestUserFactory().FirstOrDefault(x => x.UserId == id);
+                //User u = Utility.Utility.TestUserFactory().FirstOrDefault(x => x.UserId == id);
 
+                User u = new Models.User();
                 return View("List", new List<User>());
             }
             catch (Exception ex)
@@ -96,8 +103,9 @@ namespace Magneti_Marelli_Test.Controllers
         {
             try
             {
-                User u = Utility.Utility.TestUserFactory().FirstOrDefault(x => x.UserId == id);
+                //User u = Utility.Utility.TestUserFactory().FirstOrDefault(x => x.UserId == id);
 
+                User u = new Models.User();
                 return View("Details", u);
             }
             catch (Exception ex)
@@ -137,11 +145,7 @@ namespace Magneti_Marelli_Test.Controllers
         {
             try
             {
-                User u = Utility.Utility.TestUserFactory().FirstOrDefault(x => x.UserId == userId);
-
-                Groups gr = u.UserGroups.FirstOrDefault(g => g.Id == groupId);
-                u.UserGroups.Remove(gr);
-
+                User u = new Models.User();
 
                 return View("Details", u);
             }
@@ -205,7 +209,7 @@ namespace Magneti_Marelli_Test.Controllers
             if (string.IsNullOrEmpty(searchTerm))
                 return Json(null, JsonRequestBehavior.AllowGet);
 
-            var users = Utility.Utility.users.Where(u => u.FirstName.ToLower().Contains(searchTerm) || u.LastName.ToLower().Contains(searchTerm)).Select(x => new { id = x.UserId, text = x.FirstName + " " + x.LastName });
+            var users = Utility.Utility.users;
 
 
 
@@ -226,7 +230,7 @@ namespace Magneti_Marelli_Test.Controllers
             try
             {
 
-                User u = Utility.Utility.TestUserFactory().FirstOrDefault(x => x.UserId == userId);
+                User u = new Models.User();
                 return View("Details", u);
             }
             catch (Exception ex)
@@ -242,46 +246,10 @@ namespace Magneti_Marelli_Test.Controllers
         /// <returns>partial view with current login user details</returns>
         public PartialViewResult GetCurrentUserDetails()
         {
-            System.Security.Principal.WindowsIdentity wi = System.Security.Principal.WindowsIdentity.GetCurrent();
+            
+            SiteUser user = Utility.Utility.GetCurrentUser(this.HttpContext);
 
-            User u = new User();
-
-            u.LastLogon = DateTime.Now;
-            u.LastPasswordChange = DateTime.Now;
-            u.UserModification = string.Empty;
-            u.UserId = 1;
-            u.FirstName = "Andrea";
-            u.LastName = "Maestroni";
-            u.LoginName = wi.Name;
-            u.DisplayName = wi.Name;
-            u.Description = string.Empty;
-            u.Mail = string.Empty;
-            u.Phone = 0;
-            u.City = string.Empty;
-            u.Country = string.Empty;
-            u.ExpirationDate = DateTime.Now.AddYears(2);
-            u.ManagerId = 3;
-            u.ManagerLabel = "Sangalli Alberto";
-            u.BL = string.Empty;
-            u.Site = string.Empty;
-            u.IsEnable = true;
-
-
-            Groups group1 = new Groups() { Id = 1, Name = "Group1" };
-            Groups group2 = new Groups() { Id = 2, Name = "Group2" };
-            Groups group3 = new Groups() { Id = 3, Name = "Group3" };
-            Groups group4 = new Groups() { Id = 4, Name = "Group4" };
-            Groups group5 = new Groups() { Id = 5, Name = "Group5" };
-
-            u.UserGroups.Add(group1);
-            u.UserGroups.Add(group2);
-            u.UserGroups.Add(group3);
-            u.UserGroups.Add(group4);
-            u.UserGroups.Add(group5);
-
-
-
-            return PartialView("UserDetails",u);
+            return PartialView("UserDetails", user);
 
         }
 

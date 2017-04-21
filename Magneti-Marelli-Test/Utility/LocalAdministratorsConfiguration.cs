@@ -75,6 +75,19 @@ namespace Magneti_Marelli_Test.Utility
             }
         }
 
+        [ConfigurationProperty("Groups", IsRequired = true)]
+        public string Groups
+        {
+            get
+            {
+                return base["Groups"] as string;
+            }
+            set
+            {
+                base["Groups"] = value;
+            }
+        }
+
         [ConfigurationProperty("OU", IsRequired = true)]
         public string OU
         {

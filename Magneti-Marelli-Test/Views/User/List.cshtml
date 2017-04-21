@@ -62,7 +62,7 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.UserId)
+                        @Html.DisplayNameFor(model => model.LoginName)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstName)
@@ -78,7 +78,7 @@
                 {
                     <tr>
                         <th>
-                            @Html.DisplayFor(modelItem => item.UserId)
+                            @Html.DisplayFor(modelItem => item.LoginName)
                         </th>
                         <td>
                             @Html.DisplayFor(modelItem => item.FirstName)
@@ -87,18 +87,12 @@
                             @Html.DisplayFor(modelItem => item.LastName)
                         </td>
                         <td>
-                            <a href="@Url.Action("Edit", "User",new { id = item.UserId })" class="btn btn-sm btn-primary">
+                            <a href="@Url.Action("Edit", "User",new { loginName = item.LoginName })" class="btn btn-sm btn-primary">
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                 Edit User
                             </a>
                            
                         </td>
-                        @*<td>
-                            <a href="@Url.Action("Delete", "User",new { id = item.UserId })" class="btn btn-sm btn-danger">
-                                Delete User
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </a>
-                        </td>*@
                     </tr>
                 }
             </tbody>
@@ -107,52 +101,5 @@
 
 <!--/With DataTable-->
 
-<!--Without DataTable-->
-@*<div class="table-responsive" style="margin-top:20px; max-height:600px;" >
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastName)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <th scope="row">
-                        @Html.DisplayFor(modelItem => item.UserId)
-                    </th>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        <a href="@Url.Action("Edit", "User",new { id = item.UserId })" class="btn btn-sm btn-primary">
-                            Edit User
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        </a>
-                        <a href="@Url.Action("Delete", "User",new { id = item.UserId })" class="btn btn-sm btn-danger">
-                            Delete User
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>*@
-
-<!--/ Without DataTable-->
 
 

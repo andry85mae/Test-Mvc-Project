@@ -78,6 +78,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -154,10 +155,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Application.cs" />
     <Compile Include="Models\Groups.cs" />
     <Compile Include="Models\LookUp.cs" />
+    <Compile Include="Models\SiteUser.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\DirectoryEntryUtility.cs" />
     <Compile Include="Utility\Helper.cs" />
     <Compile Include="Utility\LocalAdministratorsConfiguration.cs" />
     <Compile Include="Utility\Utility.cs" />

@@ -1,20 +1,21 @@
-﻿@model Magneti_Marelli_Test.Models.User
+﻿@model Magneti_Marelli_Test.Models.SiteUser
 
 @using Magneti_Marelli_Test.Utility;
 
 <div class="col-xs-12">
 
-    <h1 class="page-header text-center">
+    @*<h1 class="page-header text-center">
         Welcome <span>@User.Identity.Name</span>
-    </h1>
+    </h1>*@
 
     <p class="h3 page-subheader text-center">
         <span>You belong to this groups: </span>
         <br />
-        @foreach (var item in Model.UserGroups)
+        @foreach (var item in Model.Groups)
         {
+            
             <span style="margin-right:5px;">
-                <strong>@item.Name</strong>
+                <strong>@item</strong>
             </span>
         }
     </p>
@@ -29,29 +30,22 @@
     <p class="h3 page-subheader text-center">
         <span>Your Can Access to the OU : </span>
         <br />
-        @if (Model.Role == Magneti_Marelli_Test.Models.PortalRole.PortalAdministrators)
+        @if (Model.Role == Magneti_Marelli_Test.Models.PortalRole.PortalAdministrators || Model.Role == Magneti_Marelli_Test.Models.PortalRole.LocalAdmnistrator)
         {
-            <span style="margin-right:5px;">
-                <strong>You Can Modify ALL!!!!!</strong>
-            </span>
+            foreach (var item in Model.Applications)
+            {
+                <span style="margin-right:5px;">
+                    <strong>@item.OU</strong>
+                </span>
+            }
         }
         else
         {
-            if (Model.Role == Magneti_Marelli_Test.Models.PortalRole.LocalAdmnistrator)
-            {
-            foreach (var item in Model.OUList)
-            {
-                <span style="margin-right:5px;">
-                    <strong>@item</strong>
-                </span>
-            }
-            }
-            else
-            {
+            
                 <span style="margin-right:5px;">
                     <strong>You Can Modify NOTHING!!!!!</strong>
                 </span>
-            }
+            
         }
 
     </p>
