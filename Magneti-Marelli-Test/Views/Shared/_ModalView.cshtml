@@ -24,10 +24,10 @@
                     // parse your data here
                     $("#modal-content").html(data);
 
-                    var table=$('#grid').DataTable();
+                    var table = $('#gridGroups').DataTable();
                     table.destroy();
 
-                    $('#grid').DataTable({
+                    $('#gridGroups').DataTable({
                         "pagingType": "full_numbers",
                         searching: false
                     });

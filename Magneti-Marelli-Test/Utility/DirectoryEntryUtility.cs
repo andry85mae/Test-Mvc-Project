@@ -251,5 +251,30 @@ namespace Magneti_Marelli_Test.Utility
                 }
             }
         }
+
+        public static List<Group> GetGrousWhereUserIsNotMemberByLoginName(string userLoginName) {
+
+            List<Group> groups = new List<Group>();
+            using (DirectoryEntry de = new DirectoryEntry("LDAP://DC=DEV,DC=DOM"))
+            {
+                using (DirectorySearcher groupSearcher = new DirectorySearcher(de))
+                {
+
+                    groupSearcher.Filter = "(&(objectCategory=group)(objectClass=group)(!(member="+ userLoginName + ")))";
+
+                    groupSearcher.PropertiesToLoad.Add("sAMAccountName");
+                    groupSearcher.PropertiesToLoad.Add("distinguishedName");
+
+                    
+                    foreach (SearchResult group in groupSearcher.FindAll())
+                    {
+                        groups.Add(Utility.FromSearchResultToGroup(group));
+
+                    }
+
+                    return groups;
+                }
+            }
+        }
     }
 }

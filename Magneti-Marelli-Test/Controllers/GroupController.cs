@@ -1,4 +1,5 @@
 ﻿using Magneti_Marelli_Test.Models;
+using Magneti_Marelli_Test.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -54,22 +55,24 @@ namespace Magneti_Marelli_Test.Controllers
         {
             try
             {
-                List<Group> groups = new List<Group>();
-                
+                List<Group> groups = DirectoryEntryUtility.GetGrousWhereUserIsNotMemberByLoginName(userLoginName);
 
-                Group group1 = new Group() { DistinguishedName = "1", Name = "Groups1" };
-                Group group2 = new Group() { DistinguishedName = "2", Name = "Groups2" };
-                Group group3 = new Group() { DistinguishedName = "3", Name = "Groups3" };
+                //ldap query for getting groups where user is not present
+                //(&(objectCategory=group)(objectClass=group)(!(member=CN=Andrea Maestroni,OU=GruppoReti,DC=DEV,DC=DOM)))
 
-                groups.Add(group1);
-                groups.Add(group2);
-                groups.Add(group3);
+                //Group group1 = new Group() { DistinguishedName = "1", Name = "Groups1" };
+                //Group group2 = new Group() { DistinguishedName = "2", Name = "Groups2" };
+                //Group group3 = new Group() { DistinguishedName = "3", Name = "Groups3" };
+
+                //groups.Add(group1);
+                //groups.Add(group2);
+                //groups.Add(group3);
 
 
                 var filtergroups=groups.Where(g => g.Name.Contains(searchTerm));
 
                 StringBuilder sb = new StringBuilder();
-                sb.Append("<table id='grid' class='table table-condensed'>");
+                sb.Append("<table id='gridGroups' class='table table-condensed'>");
 
 
                 sb.Append("<thead>");
