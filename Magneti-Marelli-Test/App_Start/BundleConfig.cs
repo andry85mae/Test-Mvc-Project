@@ -17,23 +17,23 @@ namespace Magneti_Marelli_Test
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                      "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-datepicker").Include(
-          "~/Scripts/bootstrap-datetimepicker.js"));
+                        "~/Scripts/bootstrap-datetimepicker.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/moment").Include(
-"~/Scripts/moment.js"));
+                        "~/Scripts/moment.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/select2").Include(
-"~/Scripts/select2.js"));
+                        "~/Scripts/select2.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
-"~/Scripts/DataTables/media/js/jquery.dataTables.min.js"));
+                        "~/Scripts/DataTables/media/js/jquery.dataTables.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

@@ -23,12 +23,12 @@ namespace Magneti_Marelli_Test.Utility
             u.LoginName = "grupporeti\\maestan1";
             u.FirstName = "Andrea";
             u.LastName = "Maestroni";
-            u.ManagerLabel = "Alberto Sangalli";
-            u.ManagerId = 3;
+            u.ManagerDisplayName = "Alberto Sangalli";
+            u.ManagerLoginName = "grupporeti\\sangalli";
             u.LastLogon = DateTime.Now;
             u.LastPasswordChange = DateTime.Now;
             u.UserModification = string.Empty;
-            u.IsEnable = true;
+            u.IsDisable = false;
 
             users.Add(u);
 
@@ -36,12 +36,12 @@ namespace Magneti_Marelli_Test.Utility
             u2.LoginName = "grupporeti\\mariani";
             u2.FirstName = "Alice";
             u2.LastName = "Mariani";
-            u2.ManagerId = 3;
-            u2.ManagerLabel = "Alberto Sangalli";
+            u.ManagerDisplayName = "Alberto Sangalli";
+            u.ManagerLoginName = "grupporeti\\sangalli";
             u2.LastLogon = DateTime.Now;
             u2.LastPasswordChange = DateTime.Now;
             u2.UserModification = string.Empty;
-            u2.IsEnable = false;
+            u2.IsDisable = true;
 
             users.Add(u2);
 
@@ -52,7 +52,7 @@ namespace Magneti_Marelli_Test.Utility
             u3.LastLogon = DateTime.Now;
             u3.LastPasswordChange = DateTime.Now;
             u3.UserModification = string.Empty;
-            u3.IsEnable = true;
+            u3.IsDisable = false;
         }
 
         public static List<User> TestUserFactory()
@@ -151,7 +151,7 @@ namespace Magneti_Marelli_Test.Utility
 
         public static bool UserIsActiveByActiveDirectoryValue(int flags)
         {
-            return !Convert.ToBoolean(flags & 0x0002);
+            return Convert.ToBoolean(flags & 0x0002);
         }
 
         public static bool CanPasswordExpired(int flags)
@@ -213,14 +213,15 @@ namespace Magneti_Marelli_Test.Utility
             {
                 u.ExpirationDate = DateTime.MaxValue;
             }
-            u.ManagerId = 3;
-            u.ManagerLabel = "Sangalli Alberto";
+
+            u.ManagerDisplayName = "Alberto Sangalli";
+            u.ManagerLoginName = "grupporeti\\sangalli";
 
             u.BL = user.Properties["postBoxOffice"].Count != 0 ? (string)user.Properties["telephoneNumber"][0] : null;
 
             u.Site = string.Empty;
 
-            u.IsEnable = Utility.UserIsActiveByActiveDirectoryValue((int)user.Properties["userAccountControl"][0]);
+            u.IsDisable = Utility.UserIsActiveByActiveDirectoryValue((int)user.Properties["userAccountControl"][0]);
 
             u.Groups = new List<Group>();
             if (user.Properties["memberOf"].Count > 0)

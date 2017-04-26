@@ -1,5 +1,8 @@
 ﻿@model Magneti_Marelli_Test.Models.User
 
+
+@using Magneti_Marelli_Test.Utility;
+
 @{
     ViewBag.Title = "NewUser";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -108,12 +111,13 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.ManagerId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ManagerDisplayName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.DropDownListFor(n => n.ManagerId, new SelectList(Enumerable.Empty<SelectListItem>(), "ManagerId", "ManagerLabel", 0), new { @id = "managerId", @style = "width:100%;" })
-                           
+                @Html.EditorFor(model => model.ManagerDisplayName, new { htmlAttributes = new { @class = "form-control", @id = "ManagerLabelDisplayName", @readonly = "readonly" } })
+                @Html.EditorFor(model => model.ManagerLoginName, new { htmlAttributes = new { @class = "form-control", @id = "ManagerId", style = "display:none" } })
             </div>
-            @Html.ValidationMessageFor(n => n.ManagerId)
+            <button id="modal" class="btn btn-default"> Add/Modify Manager</button>
+            @Html.ValidationMessageFor(n => n.ManagerDisplayName)
         </div>
 
         <div class="form-group">
@@ -128,43 +132,58 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+<div id="mymodal" class="modal fade hidden-print" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Manager</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">
+                            <span class="fa fa-search"></span>
+                        </span>
+                        <input type="text" id="qry" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+
+                        <button class="btn btn-primary" id="searchButton" style="margin-left:20px;">Search</button>
+                    </div>
+
+
+
+                    <div id="modal-content" style="margin-top:10px;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
 
+
         $(document).ready(function () {
 
             var pageSize = 20;
 
-           var optionListUrl = '@Url.Action("GetManagerList", "User")';
+            var optionListUrl = '@Url.Action("GetManagerList", "User")';
 
            //Method which is to be called for populating options in dropdown //dynamically
 
-           $('#managerId').select2({
-                   ajax: {
-                       delay: 150,
-                       url: optionListUrl,
-                       type: 'GET',
-                       dataType: 'json',
-                       data: function (params) {
 
-                           return {
-                               searchTerm: params.term
-                           };
-                       },
-                       processResults: function (data, params) {
-
-                           return {
-                               results: data,
-                               
-                           };
-                       }
-                   },
-                   placeholder: "-- Select --",
-                   minimumInputLength: 0,
-                   allowClear: true,
-               });
 
             var d = $('.expiration-date').datetimepicker({
                 format: "DD/MM/YYYY"
@@ -178,6 +197,47 @@
 
             }
 
+            $("#modal").click(function () {
+
+                $('#mymodal').modal('toggle');
+                return false;
+            })
+
+           $('#searchButton').click(function () {
+
+            //Get the id to delete from the hidden field
+            var qry = $('#qry').val();
+
+            $.ajax({
+                url: "/User/QueryManager",
+                type:"POST",
+                data: {
+                    searchTerm: qry
+                },
+                success: function (data) {
+                    // your data could be a View or Json or what ever you returned in your action method
+                    // parse your data here
+                    $("#modal-content").html(data);
+
+                    $('#gridUser').DataTable({
+                        "pagingType": "full_numbers",
+                        searching: false
+                    });
+                }
+            });
+
+
         });
+
+        });
+
+        function AddOrModifyManager(ManagerLoginName, ManagerDisplayName) {
+
+            $("#ManagerLabelDisplayName").text(ManagerDisplayName)
+            $("#ManagerLabelDisplayName").val(ManagerDisplayName)
+            $("#ManagerId").val(ManagerLoginName);
+            $("#ManagerId").text(ManagerLoginName);
+            $('#mymodal').modal('toggle');
+        }
     </script>
 }

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -251,6 +252,74 @@ namespace Magneti_Marelli_Test.Controllers
 
             return PartialView("UserDetails", user);
 
+        }
+
+
+        [HandleError]
+        public ActionResult GetModal(string Id)
+        {
+
+            try
+            {
+                ViewBag.Id = Id;
+
+                return PartialView("_ModalUserView");
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [HandleError]
+        public string QueryManager(string searchTerm)
+        {
+            try
+            {
+                
+
+                var users = Utility.Utility.users;
+
+                StringBuilder sb = new StringBuilder();
+                sb.Append("<table id='gridUser' class='table table-condensed'>");
+
+
+                sb.Append("<thead>");
+                sb.Append("<tr>");
+                sb.Append("<th> LoginName </th>");
+                sb.Append("<th> DisplayName </th>");
+                sb.Append("<th>  </th>");
+                sb.Append("</tr>");
+                sb.Append("</thead>");
+                sb.Append("<tbody>");
+
+                foreach (User g in users)
+                {
+
+                    string displayName = g.DisplayName != null ? g.DisplayName.Replace(@"\", @"\\") :g.LoginName.Replace(@"\", @"\\"); 
+                    string loginName = g.LoginName.Replace(@"\", @"\\");
+                    sb.Append("<tr>");
+
+                    sb.Append("<td>" + g.LoginName + "</td>");
+                    sb.Append("<td>" + g.DisplayName + "</td>");
+                    string var1 = "AddOrModifyManager(\"" + loginName + "\",\"" + displayName + "\")";
+                    sb.Append(@"<td> <button class='btn btn-primary btn-xs' onclick='"+var1+"' >Add/Modify</button></td>");
+
+                    sb.Append("</tr>");
+                }
+
+                sb.Append("</tbody>");
+                sb.Append("</table>");
+
+                return sb.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
     }

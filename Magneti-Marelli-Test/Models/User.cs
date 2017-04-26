@@ -52,15 +52,16 @@ namespace Magneti_Marelli_Test.Models
         public DateTime? ExpirationDate { get; set; }
 
         [Display(Name = "Manager")]
-        public int ManagerId { get; set; }
+        public string ManagerLoginName { get; set; }
 
-        public string ManagerLabel { get; set; }
+        public string ManagerDisplayName { get; set; }
 
         public string BL { get; set; }
 
         public string Site { get; set; }
 
-        public bool IsEnable { get; set; }
+        [Display(Name = "Disable")]
+        public bool IsDisable { get; set; }
 
         public List<Group> Groups { get; set; }
         

@@ -50,13 +50,12 @@ namespace Magneti_Marelli_Test.Controllers
 
         [HttpPost]
         [HandleError]
-        public string Query(string searchTerm,int userId)
+        public string Query(string searchTerm,string userLoginName)
         {
             try
             {
                 List<Group> groups = new List<Group>();
-
-                int UserId = userId;
+                
 
                 Group group1 = new Group() { DistinguishedName = "1", Name = "Groups1" };
                 Group group2 = new Group() { DistinguishedName = "2", Name = "Groups2" };
@@ -78,7 +77,6 @@ namespace Magneti_Marelli_Test.Controllers
                 sb.Append("<th> Id </th>");
                 sb.Append("<th> Name </th>");
                 sb.Append("<th>  </th>");
-                sb.Append("<th>  </th>");
                 sb.Append("</tr>");
                 sb.Append("</thead>");
                 sb.Append("<tbody>");
@@ -88,8 +86,8 @@ namespace Magneti_Marelli_Test.Controllers
 
                     sb.Append("<td>" + g.DistinguishedName + "</td>");
                     sb.Append("<td>" + g.Name + "</td>");
-                    sb.Append("<td> <button class='btn btn-primary btn-xs' onclick='Add("+ UserId + ","+ g.DistinguishedName + ")'>Add</button></td>");
-                    sb.Append("<td> <button class='btn btn-primary btn-xs' onclick='Remove(" + UserId + "," + g.DistinguishedName + ")'>Remove</button></td>");
+                    string var1 = "Add(\"" + userLoginName.Replace(@"\", @"\\") + "\",\"" + g.DistinguishedName + "\")";
+                    sb.Append("<td> <button class='btn btn-primary btn-xs'  onclick='" + var1 + "'>Add</button></td>");
 
                     sb.Append("</tr>");
                 }
