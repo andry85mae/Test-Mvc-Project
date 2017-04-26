@@ -18,7 +18,7 @@ namespace Magneti_Marelli_Test.Controllers
 
             try
             {
-                List<Groups> groups = new List<Groups>();
+                List<Group> groups = new List<Group>();
                 ViewBag.Groups = groups;
 
 
@@ -54,13 +54,13 @@ namespace Magneti_Marelli_Test.Controllers
         {
             try
             {
-                List<Groups> groups = new List<Groups>();
+                List<Group> groups = new List<Group>();
 
                 int UserId = userId;
 
-                Groups group1 = new Groups() { Id = 1, Name = "Groups1" };
-                Groups group2 = new Groups() { Id = 2, Name = "Groups2" };
-                Groups group3 = new Groups() { Id = 3, Name = "Groups3" };
+                Group group1 = new Group() { DistinguishedName = "1", Name = "Groups1" };
+                Group group2 = new Group() { DistinguishedName = "2", Name = "Groups2" };
+                Group group3 = new Group() { DistinguishedName = "3", Name = "Groups3" };
 
                 groups.Add(group1);
                 groups.Add(group2);
@@ -83,13 +83,13 @@ namespace Magneti_Marelli_Test.Controllers
                 sb.Append("</thead>");
                 sb.Append("<tbody>");
 
-                foreach (Groups g in filtergroups) {
+                foreach (Group g in filtergroups) {
                     sb.Append("<tr>");
 
-                    sb.Append("<td>" + g.Id + "</td>");
+                    sb.Append("<td>" + g.DistinguishedName + "</td>");
                     sb.Append("<td>" + g.Name + "</td>");
-                    sb.Append("<td> <button class='btn btn-primary btn-xs' onclick='Add("+ UserId + ","+ g.Id + ")'>Add</button></td>");
-                    sb.Append("<td> <button class='btn btn-primary btn-xs' onclick='Remove(" + UserId + "," + g.Id + ")'>Remove</button></td>");
+                    sb.Append("<td> <button class='btn btn-primary btn-xs' onclick='Add("+ UserId + ","+ g.DistinguishedName + ")'>Add</button></td>");
+                    sb.Append("<td> <button class='btn btn-primary btn-xs' onclick='Remove(" + UserId + "," + g.DistinguishedName + ")'>Remove</button></td>");
 
                     sb.Append("</tr>");
                 }

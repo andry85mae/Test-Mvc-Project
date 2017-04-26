@@ -12,7 +12,7 @@ namespace Magneti_Marelli_Test.Models
 
         public User()
         {
-            this.Groups = new List<string>();
+            this.Groups = new List<Group>();
 
         }
 
@@ -23,7 +23,7 @@ namespace Magneti_Marelli_Test.Models
         public DateTime? LastPasswordChange { get; set; }
 
         public string UserModification { get; set; }
-        
+
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "FirstName is required")]
         public string FirstName { get; set; }
@@ -47,6 +47,8 @@ namespace Magneti_Marelli_Test.Models
         public string Country { get; set; }
 
         public bool CanPasswordExpire { get; set; }
+
+        public bool CanUserExpire { get; set; }
         public DateTime? ExpirationDate { get; set; }
 
         [Display(Name = "Manager")]
@@ -60,9 +62,8 @@ namespace Magneti_Marelli_Test.Models
 
         public bool IsEnable { get; set; }
 
-        public List<string> Groups { get; set; }
-
-        public List<Application> Applications { get; set; }
+        public List<Group> Groups { get; set; }
+        
     }
 
 

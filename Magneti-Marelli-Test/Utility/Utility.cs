@@ -74,8 +74,13 @@ namespace Magneti_Marelli_Test.Utility
         }
 
         public static string GetPortalAdministratorGroupName()
-        {
+        {            
             return WebConfigurationManager.AppSettings["PortalAdministratorGroup"];
+        }
+
+        public static Group GetPortalAdministratorGroup() {
+
+            return DirectoryEntryUtility.GetGroupByName(WebConfigurationManager.AppSettings["PortalAdministratorGroup"]);
         }
 
         public static List<Application> GetAllApplicationByConfig()
@@ -112,11 +117,16 @@ namespace Magneti_Marelli_Test.Utility
             return cookie;
         }
 
-        public static string GetCurrentUserNameWIthoutDomain()
+        public static string GetCurrentUserNameWithoutDomain()
         {
 
             WindowsIdentity wi = WindowsIdentity.GetCurrent();
             return wi.Name.Split('\\').Last();
+        }
+
+        public static string GetUserWithoutDomain(string userWithDomani)
+        {
+            return userWithDomani.Split('\\').Last();
         }
 
         public static SiteUser GetCurrentUser(HttpContextBase ctx)
@@ -132,7 +142,7 @@ namespace Magneti_Marelli_Test.Utility
             {
 
                 var cookie = CreateCurrentUserCookie();
-                user = JsonConvert.DeserializeObject<SiteUser>(ck.Value);
+                user = JsonConvert.DeserializeObject<SiteUser>(cookie.Value);
                 ctx.Response.Cookies.Add(cookie);
             }
 
@@ -144,18 +154,28 @@ namespace Magneti_Marelli_Test.Utility
             return !Convert.ToBoolean(flags & 0x0002);
         }
 
-        public static bool isPasswordExpired(int flags)
+        public static bool CanPasswordExpired(int flags)
         {
-            bool m_Check = false;
+            bool m_Check = true;
 
-            int m_Val2 = (int)0x10000;
+            int ADS_UF_DONT_EXPIRE_PASSWD = (int)0x00010000;
 
-            if (Convert.ToBoolean(flags & m_Val2))
+
+            if (Convert.ToBoolean(flags & ADS_UF_DONT_EXPIRE_PASSWD))
             {
-                m_Check = true;
+                m_Check = false;
             } //end
 
             return m_Check;
+        }
+
+        public static bool CanUserExpired(long DateInTinks)
+        {
+            //A value of 0 or 0x7FFFFFFFFFFFFFFF (9223372036854775807) indicates that the account never expires.
+            if (DateInTinks != 0 && DateInTinks != 9223372036854775807)
+                return true;
+
+            return false;
         }
 
         public static User FromSearchResultToUser(SearchResult user)
@@ -179,11 +199,14 @@ namespace Magneti_Marelli_Test.Utility
 
             u.Country = user.Properties["l"].Count != 0 ? (string)user.Properties["telephoneNumber"][0] : null;
 
-            u.CanPasswordExpire = Utility.isPasswordExpired((int)user.Properties["userAccountControl"][0]);
+            u.CanPasswordExpire = Utility.CanPasswordExpired((int)user.Properties["userAccountControl"][0]);
 
-            if (u.CanPasswordExpire == true)
+            u.CanUserExpire = Utility.CanUserExpired((long)user.Properties["accountExpires"][0]);
+
+            if (u.CanUserExpire == true)
             {
-                u.ExpirationDate = user.Properties["accountExpires"].Count != 0 ? new Nullable<DateTime>(new DateTime((Int64)user.Properties["accountExpires"][0])) : null;
+
+                u.ExpirationDate = user.Properties["accountExpires"].Count != 0 ? new Nullable<DateTime>(new DateTime((long)user.Properties["accountExpires"][0])) : null;
 
             }
             else
@@ -199,12 +222,31 @@ namespace Magneti_Marelli_Test.Utility
 
             u.IsEnable = Utility.UserIsActiveByActiveDirectoryValue((int)user.Properties["userAccountControl"][0]);
 
-            u.Groups = new List<string>();
+            u.Groups = new List<Group>();
+            if (user.Properties["memberOf"].Count > 0)
+            {
 
-            u.Applications = new List<Application>();
+                
+                foreach (string g in user.Properties["memberOf"])
+                {
+
+                    u.Groups.Add(DirectoryEntryUtility.GetGroupByDistinguishedName(g));
+                }
+
+            }
+            
 
             return u;
         }
 
+        public static Group FromSearchResultToGroup(SearchResult group)
+        {
+            Group g = new Group();
+
+            g.Name = group.Properties["SAMAccountName"].Count != 0 ? (string)group.Properties["SAMAccountName"][0] : null;
+            g.DistinguishedName= group.Properties["distinguishedName"].Count != 0 ? (string)group.Properties["distinguishedName"][0] : null;
+
+            return g;
+        }
     }
 }

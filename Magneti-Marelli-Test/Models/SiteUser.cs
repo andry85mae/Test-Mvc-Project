@@ -11,7 +11,7 @@ namespace Magneti_Marelli_Test.Models
 
         public SiteUser() {
             this.Role = PortalRole.Manager;
-            this.Groups = new List<string>();
+            this.Groups = new List<Group>();
             this.Applications = new List<Application>();
         }
         public string LoginName { get; set; }
@@ -22,7 +22,7 @@ namespace Magneti_Marelli_Test.Models
 
         public PortalRole Role { get; set; }
 
-        public List<string> Groups { get; set; }
+        public List<Group> Groups { get; set; }
 
         public List<Application> Applications { get; set; }
     }

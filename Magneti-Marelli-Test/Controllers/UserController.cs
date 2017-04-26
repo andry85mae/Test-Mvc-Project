@@ -21,7 +21,7 @@ namespace Magneti_Marelli_Test.Controllers
         {
             try
             {
-                List<User> users = Utility.DirectoryEntryUtility.GetUserByQuery(this.HttpContext, qry);
+                List<User> users = Utility.DirectoryEntryUtility.GetUsersByQuery(this.HttpContext, qry);
                 return View("List", users);
             }
             catch (Exception ex)
@@ -62,7 +62,7 @@ namespace Magneti_Marelli_Test.Controllers
         {
             try
             {
-                User u = new User();
+                User u = Utility.DirectoryEntryUtility.GetUserByLoginName(loginName);
                 return View("Details", u);
             }
             catch (Exception ex)

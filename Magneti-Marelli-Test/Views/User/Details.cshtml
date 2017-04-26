@@ -36,7 +36,10 @@
                 </span>
 
                 <span class="col-xs-6">
-                    @Model.LastLogon.ToString("dd/MM/yyyy")
+                    @if (@Model.LastLogon.HasValue)
+                    {
+                        @Model.LastLogon.Value.ToString("dd/MM/yyyy")
+                    }
                 </span>
             </div>
             <div class="col-xs-6">
@@ -47,7 +50,10 @@
                 </span>
 
                 <span class="col-xs-6">
-                    @Model.LastPasswordChange.ToString("dd/MM/yyyy")
+                    @if (@Model.LastPasswordChange.HasValue)
+                    {
+                        @Model.LastPasswordChange.Value.ToString("dd/MM/yyyy")
+                    }
                 </span>
             </div>
         </div>
@@ -105,17 +111,17 @@
         <div class="row" style="margin-top:40px;">
             <span class="col-xs-2">
                 <span class="col-xs-12">
-                    @Ajax.RawActionLink(string.Format("<i class='fa fa-user-times'></i> Save User"), "Save", "User", new { userId = Model.UserId }, new AjaxOptions { HttpMethod = "GET" }, new { @class = "btn btn-sm btn-primary" })
+                    @Ajax.RawActionLink(string.Format("<i class='fa fa-user-times'></i> Save User"), "Save", "User", new { userId = Model.LoginName }, new AjaxOptions { HttpMethod = "GET" }, new { @class = "btn btn-sm btn-primary" })
                 </span>
             </span>
             <span class="col-xs-2">
                 <span class="col-xs-12">
-                    @Ajax.RawActionLink(string.Format("<i class='fa fa-user-times'></i> Delete User"), "Delete", "User", new { userId = Model.UserId }, new AjaxOptions { HttpMethod = "GET" }, new { @class = "btn btn-sm btn-danger" })
+                    @Ajax.RawActionLink(string.Format("<i class='fa fa-user-times'></i> Delete User"), "Delete", "User", new { userId = Model.LoginName }, new AjaxOptions { HttpMethod = "GET" }, new { @class = "btn btn-sm btn-danger" })
                 </span>
             </span>
             <span class="col-xs-2">
                 <span class="col-xs-12">
-                    @Ajax.RawActionLink(string.Format("<i class='fa fa-refresh'></i> Reset Password"), "ResetPassword", "User", new { userId = Model.UserId }, new AjaxOptions { HttpMethod = "GET" }, new { @class = "btn btn-sm btn-default" })
+                    @Ajax.RawActionLink(string.Format("<i class='fa fa-refresh'></i> Reset Password"), "ResetPassword", "User", new { userId = Model.LoginName }, new AjaxOptions { HttpMethod = "GET" }, new { @class = "btn btn-sm btn-default" })
                 </span>
             </span>
         </div>
@@ -133,59 +139,59 @@
         </div>
     </div>
     <div class="dl-horizontal">
-
-        <table id="grid" class="display compact" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Remove
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Magneti_Marelli_Test.Models.Groups group in Model.UserGroups)
+        <span class="row">
+            <table id="grid" class="display compact" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Remove
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in Model.Groups)
                 {
                     <tr>
-                        <th scope="row">
-                            <i class="fa fa-users" aria-hidden="true"></i>
-                            <span>
-                                @Html.DisplayFor(g => group.Id)
-                            </span>
-                        </th>
+                        <td>
+                            @Html.DisplayFor(g => group.DistinguishedName)
+                        </td>
                         <td>
                             @Html.DisplayFor(g => group.Name)
                         </td>
                         <td>
-                            @Ajax.RawActionLink(string.Format("<i class='fa fa-minus'></i> Remove"), "RemoveGroups", "User", new { groupId = group.Id, userId = Model.UserId }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "btn btn-sm btn-danger" })
+                            @Ajax.RawActionLink(string.Format("<i class='fa fa-minus'></i> Remove"), "RemoveGroups", "User", new { groupId = group.DistinguishedName, userId = Model.LoginName }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "btn btn-sm btn-danger" })
                         </td>
                     </tr>
                 }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </span>
 
 
-        <span>
-            @Ajax.RawActionLink(string.Format("<i class='fa fa-plus-square-o'></i> Add Groups"), "GetModal", "Group", new { Id = Model.UserId },null, new
+        <span class="row">
+            <span>
+                @Ajax.RawActionLink(string.Format("<i class='fa fa-plus-square-o'></i> Add Groups"), "GetModal", "Group", new { Id = Model.LoginName }, null, new
        {  @* Needed to link to the html of the modal*@
-            data_target = "#modal-container",
-            @* Tells the bootstrap javascript to do its thing*@
+                data_target = "#modal-container",
+                @* Tells the bootstrap javascript to do its thing*@
            data_toggle = "modal",
            @class = "btn btn-primary"
        })
-            @*@Html.ActionLink("Add Groups", "GetModal", "Group", new { Id = Model.UserId }, new
-       {
-        @* Needed to link to the html of the modal*@
-            @*data_target = "#modal-container",*@
-            @* Tells the bootstrap javascript to do its thing*@
-           @*data_toggle = "modal",*@
-           @*@class = "btn btn-primary fa fa-plus-square-o"*@
-      @* })*@
+                @*@Html.ActionLink("Add Groups", "GetModal", "Group", new { Id = Model.UserId }, new
+                    {
+                     @* Needed to link to the html of the modal*@
+                @*data_target = "#modal-container",*@
+                @* Tells the bootstrap javascript to do its thing*@
+                @*data_toggle = "modal",*@
+                @*@class = "btn btn-primary fa fa-plus-square-o"*@
+                @* })*@
+            </span>
         </span>
     </div>
 </div>
@@ -250,7 +256,12 @@
 
            $('#grid').DataTable({
                "pagingType": "full_numbers",
-               searching: false
+               searching: false,
+               "columns": [
+                   { "width": "40%" },
+                   { "width": "40%" },
+                   { "width": "20%" }
+               ]
            });
 
         });

@@ -5,9 +5,9 @@ using System.Web;
 
 namespace Magneti_Marelli_Test.Models
 {
-    public class Groups
+    public class Group
     {
-        public int Id { get; set; }
+        public string DistinguishedName { get; set; }
         
         public string Name { get; set; }
         
