@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
     background-color:white;
 }
@@ -27,11 +26,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: 'Oswald', sans-serif;
 }
 
+
 .container {
     margin-right: auto;
     margin-left: auto;
-    padding-left: 15px;
-    padding-right: 15px;
 }
 
 .page-header {
@@ -87,7 +85,7 @@ html {
 
 header {
     background-image: url("Images/top_bg.jpg");
-    background-repeat: no-repeat;
+    background-repeat: round;
     padding-top: 25px;
     /*background-attachment: fixed;*/
     /*background-position: center;*/
@@ -210,7 +208,7 @@ footer {
     color: #c8c8c8;
     margin-top: 50px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 2.3em;
+    font-size: 4.3em;
 }
 
     .site-title a, .site-title a:hover, .site-title a:active {
@@ -222,16 +220,13 @@ footer {
 
 .topLogoContainer {
     background-color: white;
+    height: 142px;
     opacity: 0.7;
 }
 
 .topLogo {
-    background: url(../../Content/Images/mm_logo.png) no-repeat center;
+    background: url('../../Content/images/mm_logo.png') no-repeat center;
     height: 100%;
-    background-size: contain;
-    width: 100px;
-    height: 70px;
-    margin: 0 auto;
 }
 
 .menuBarContainer {

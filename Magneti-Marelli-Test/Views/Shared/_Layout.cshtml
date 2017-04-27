@@ -7,14 +7,35 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
+
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top menuBarContainer">
-        <div class="container">
-            <div class="col-md-2 topLogoContainer">
-                <div class="topLogo"></div>
+
+    <header>
+        <div>
+            <div class="container">
+                <div class="row" style="height:105px">
+                    <div class="col-md-3 topLogoContainer">
+                        <div class="topLogo"></div>
+                    </div>
+                    <div class="col-md-9 site-title">
+                        @Html.ActionLink("AD Supplier Portal", "Index", "User")
+                    </div>
+                </div>
+            </div>
+            <div class="container menuBarContainer">
+                <div class="row">
+                    <nav>
+                        <ul id="menu" style="text-align:center;">
+                            <li name="domain" class="col-md-3 navItem"><span class="navMenuLink">Search</span></li>
+                            <li name="keyword" class="col-md-3 navItem"><span class="navMenuLink">Permission</span></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
+
+    </header>
+
     <div class="container body-content" style="margin-top:50px;">
         @RenderBody()
         <hr />
@@ -22,8 +43,8 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/bootstrap-datepicker")
     @Scripts.Render("~/bundles/datatable")
     @Scripts.Render("~/bundles/select2")
